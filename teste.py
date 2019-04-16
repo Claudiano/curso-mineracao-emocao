@@ -103,4 +103,27 @@ classificador = nltk.NaiveBayesClassifier.train(baseCompleta)
 # Imprimir as labels existentes
 #print(classificador.labels())
 
-print(classificador.show_most_informative_features(5))
+#print(classificador.show_most_informative_features(5))
+
+# realizando teste
+teste = "que belo dia"
+
+# extrair radicais
+testeStemming = []
+stemmer = nltk.stem.RSLPStemmer()
+for (palavras) in teste.split():
+	comstem = [p for p in palavras.split()]
+	testeStemming.append(str(stemmer.stem(comstem[0])))
+
+novo = extratorPalavras(testeStemming)
+#print(novo)
+
+#classificação se é de alegria ou medo, retorna o label
+print(classificador.classify(novo))
+
+# imprimir a porcentatagem e o sentimento na frase
+distribuicao = classificador.prob_classify(novo)
+for classe in distribuicao.samples():
+	print("%s: %f" %(classe, distribuicao.prob(classe)))
+
+
